@@ -29,12 +29,14 @@ jobs:
         run: |
           flutter create . --platforms=android --project-name alili_omni --org com.alili
           flutter pub get
+          flutter clean
 
       - name: Build APK
-        run: flutter build apk --release --target-platform android-arm64
+        run: flutter build apk --release --target-platform android-arm64 --verbose
 
       - name: Upload to GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softmax/action-gh-release@v2
+        if: success()
         with:
           tag_name: v3.0.${{ github.run_number }}
           name: Alili Omni Ultimate v3.0.${{ github.run_number }}
