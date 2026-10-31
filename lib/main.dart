@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -83,7 +82,6 @@ class _ChatScreenState extends State<ChatScreen> {
   final String workerUrl = 'https://alili-omni.medalili2045.workers.dev';
   
   String _selectedModel = 'gemini';
-  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -150,21 +148,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  Future<void> _playTTS(String text) async {
-    try {
-      final response = await http.post(
-        Uri.parse(workerUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'type': 'tts', 'message': text}),
-      );
-      if (response.statusCode == 200) {
-        await _audioPlayer.play(BytesSource(response.bodyBytes));
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('الصوت غير متاح حالياً')));
-    }
-  }
-
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -224,28 +207,15 @@ class _ChatScreenState extends State<ChatScreen> {
                         borderRadius: BorderRadius.circular(24),
                         border: isUser ? null : Border.all(color: const Color(0xFF2A2A2A), width: 1),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          isUser 
-                            ? Text(m['text'], style: const TextStyle(color: Colors.white, fontSize: 15))
-                            : MarkdownBody(
-                                data: m['text'],
-                                styleSheet: MarkdownStyleSheet(
-                                  p: const TextStyle(color: Colors.white70, fontSize: 15, height: 1.5),
-                                  code: const TextStyle(backgroundColor: Colors.black45, color: Color(0xFF00E5FF)),
-                                ),
-                              ),
-                          if (!isUser)
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: IconButton(
-                                icon: const Icon(Icons.volume_up, color: Colors.white54, size: 20),
-                                onPressed: () => _playTTS(m['text']),
-                              ),
-                            )
-                        ],
-                      ),
+                      child: isUser 
+                        ? Text(m['text'], style: const TextStyle(color: Colors.white, fontSize: 15))
+                        : MarkdownBody(
+                            data: m['text'],
+                            styleSheet: MarkdownStyleSheet(
+                              p: const TextStyle(color: Colors.white70, fontSize: 15, height: 1.5),
+                              code: const TextStyle(backgroundColor: Colors.black45, color: Color(0xFF00E5FF)),
+                            ),
+                          ),
                     ),
                   );
                 },
