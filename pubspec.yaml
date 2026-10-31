@@ -11,8 +11,9 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^2.5.1
   http: ^1.2.2
-  hive_ce: ^2.20.0
-  hive_ce_flutter: ^2.20.0
+  # تم تصحيح أرقام الإصدارات هنا لتتوافق مع Flutter 3.22
+  hive_ce: ^2.3.4
+  hive_ce_flutter: ^2.3.4
   flutter_markdown_plus: ^1.0.12
   google_fonts: ^6.2.1
   uuid: ^4.4.2
