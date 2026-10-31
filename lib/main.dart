@@ -141,7 +141,7 @@ class _ChatScreenState extends State<ChatScreen> {
         _addMessage('مشكلة في الخادم (كود ${response.statusCode})', false);
       }
     } catch (e) {
-      // التعديل هنا: إظهار الخطأ الحقيقي
+      // إظهار الخطأ الحقيقي
       _addMessage('الخطأ الحقيقي: $e', false);
     } finally {
       _isLoading = false;
