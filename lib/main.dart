@@ -138,10 +138,11 @@ class _ChatScreenState extends State<ChatScreen> {
           _addMessage('عذراً، حدث خطأ: ${data['error']}', false);
         }
       } else {
-        _addMessage('عذراً، واجهت مشكلة في الخادم.', false);
+        _addMessage('مشكلة في الخادم (كود ${response.statusCode})', false);
       }
     } catch (e) {
-      _addMessage('تعذر الاتصال بالشبكة.', false);
+      // التعديل هنا: إظهار الخطأ الحقيقي
+      _addMessage('الخطأ الحقيقي: $e', false);
     } finally {
       _isLoading = false;
       setState(() {});
@@ -279,7 +280,7 @@ class _ImageScreenState extends State<ImageScreen> {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('فشل توليد الصورة.')));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تعذر الاتصال.')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('الخطأ: $e')));
     } finally {
       setState(() => _isLoading = false);
     }
