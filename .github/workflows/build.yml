@@ -25,9 +25,10 @@ jobs:
           flutter-version: '3.22.0'
           channel: 'stable'
 
-      - name: Fix Project Structure and Install Dependencies
+      - name: Fix Project Structure and Add Internet Permission
         run: |
           flutter create . --platforms=android --project-name alili_omni --org com.alili
+          sed -i 's/<application/<uses-permission android:name="android.permission.INTERNET"\/>\n    <application/' android/app/src/main/AndroidManifest.xml
           flutter pub get
           flutter clean
 
