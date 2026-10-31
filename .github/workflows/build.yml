@@ -32,7 +32,7 @@ jobs:
           flutter clean
 
       - name: Build APK
-        run: flutter build apk --release --target-platform android-arm64 --verbose
+        run: flutter build apk --release --target-platform android-arm64
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
