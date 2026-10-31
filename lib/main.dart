@@ -79,7 +79,7 @@ class _ChatScreenState extends State<ChatScreen> {
   List<Map<String, dynamic>> _messages = [];
   bool _isLoading = false;
   
-  // الرابط الجديد الخاص بك
+  // الرابط الخاص بك
   final String workerUrl = 'https://alili-omni.medalili2045.workers.dev';
   
   String _selectedModel = 'gemini';
